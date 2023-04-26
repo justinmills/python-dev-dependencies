@@ -20,8 +20,7 @@ Install this as your only dev dependency to pick up a bunch of common dev-time l
 
 * Type checking
 
-      mypy devdeps
-      mypy tests
+      mypy devdeps tests
 
 * Tests
 
