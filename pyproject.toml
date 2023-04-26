@@ -12,6 +12,7 @@ requires-python = ">=3.11"
 keywords = ["library", "dependencies"]
 license = {text = "MIT"}
 dependencies = [
+    "pydantic",
     "black",
     "flake8",
     "flake8-black",
