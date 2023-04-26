@@ -2,7 +2,7 @@ name: Continuous Integration
 run-name: ${{ github.actor }} has added a commit trigger this GitHub Actions
 on: [push]
 jobs:
-  linting:
+  continuous-integration:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
