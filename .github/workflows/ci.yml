@@ -1,6 +1,8 @@
 name: Continuous Integration
 run-name: ${{ github.actor }} has added a commit trigger this GitHub Actions
+
 on: [push]
+
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
@@ -19,5 +21,15 @@ jobs:
         run: pipenv run black --check .
       - name: Type checking
         run: pipenv run mypy devdeps tests
+
       - name: Tests
         run: pipenv run pytest
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results
+          path: |
+            junit/test-results.xml
+            htmlcov/*
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}

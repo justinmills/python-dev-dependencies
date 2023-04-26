@@ -60,7 +60,7 @@ disallow_untyped_defs = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--verbose --cov=devdeps --cov=tests --cov-report html --cov-report term --cov-fail-under=100 --capture=no"
+addopts = "--verbose --doctest-modules --junitxml=junit/test-results.xml --cov=devdeps --cov=tests --cov-report html --cov-report term --cov-fail-under=100 --capture=no"
 testpaths = [
     "tests"
 ]
