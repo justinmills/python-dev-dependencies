@@ -14,10 +14,10 @@ jobs:
       - name: Install dependencies
         run: pipenv install --dev
       - name: Linting
-        run: ruff check .
+        run: pipenv run ruff check .
       - name: Formatting
-        run: black --check .
+        run: pipenv run black --check .
       - name: Type checking
-        run: mypy devdeps tests
+        run: pipenv run mypy devdeps tests
       - name: Tests
-        run: pytest
+        run: pipenv run pytest
