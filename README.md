@@ -29,3 +29,7 @@ Install this as your only dev dependency to pick up a bunch of common dev-time l
 ## Building a package to release
 
     python -m build
+
+    # To release that package
+    twine upload dist/dev-dependencies-*.tar.gz dist/dev_dependencies-*-py3-none-any.whl
+
