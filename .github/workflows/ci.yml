@@ -35,4 +35,4 @@ jobs:
         if: ${{ always() }}
 
       - name: Build package
-        run: python -m build
+        run: pipenv run python -m build
