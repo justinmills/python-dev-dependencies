@@ -24,7 +24,7 @@ jobs:
 
       - name: Tests
         run: |
-        pipenv run pytest --verbose --emoji --md report.md
+        pipenv run pytest --verbose --emoji --md report.md && \
         cat report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload test results
         uses: actions/upload-artifact@v3
