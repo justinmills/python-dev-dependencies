@@ -16,21 +16,25 @@ jobs:
       - name: Install dependencies
         run: pipenv install --dev
   linting:
+    runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Linting
         run: pipenv run ruff check .
   formatting:
+    runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Formatting
         run: pipenv run black --check .
   typechecking:
+    runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Type checking
         run: pipenv run mypy devdeps tests
   tests:
+    runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Tests
@@ -47,6 +51,7 @@ jobs:
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
   build:
+    runs-on: ubuntu-latest
     needs: [setup]
     steps:
       - name: Build package
