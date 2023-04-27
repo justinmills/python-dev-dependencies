@@ -13,3 +13,4 @@ _version.py
 test-results.xml
 /.coverage
 .pytest_cache
+report.md
