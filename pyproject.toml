@@ -20,9 +20,10 @@ dependencies = [
     "mypy",
     "pydantic",
     "pytest",
+    "pytest-mock",
+    "hypothesis",
     "pytest-cov",
     "pytest-xdist",
-    "pytest-mock",
     "pytest-md",
     "pytest-emoji",
 ]

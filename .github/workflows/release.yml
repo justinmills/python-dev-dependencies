@@ -1,13 +1,14 @@
-name: Continuous Integration
-run-name: ${{ github.actor }} has pushed content to GitHub
-
-on: [push]
+name: Publish Release
+run-name: ${{ github.actor }} has created a new release - build and publish it
 
 jobs:
-  continuous-integration:
+  pypi:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          # Important to check out not just the sha, but the current tag
+          fetch-depth: 0
       - uses: actions/setup-python@v4
         with:
           cache: pipenv
@@ -16,6 +17,7 @@ jobs:
       - name: Install dependencies
         run: pipenv install --dev
 
+      # Go ahead and let's run all of the checks first        
       - name: Linting
         run: pipenv run ruff check .
       - name: Formatting
@@ -37,5 +39,8 @@ jobs:
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
 
+      # Finally, build and publish the package to pypi
       - name: Build package
         run: pipenv run python -m build
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@release/v1
