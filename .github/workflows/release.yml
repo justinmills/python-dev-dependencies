@@ -1,6 +1,11 @@
 name: Publish Release
 run-name: ${{ github.actor }} has created a new release - build and publish it
 
+# Run on creation of a new release
+on:
+  release:
+    types: [published]
+
 jobs:
   pypi:
     runs-on: ubuntu-latest
