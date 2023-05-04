@@ -4,36 +4,37 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dev-dependencies"
-authors = [
-  { name = "Justin Mills" }
-]
+authors = [{ name = "Justin Mills" }]
 description = "An opinionated library of dev-time dependencies"
 requires-python = ">=3.11"
 keywords = ["library", "dependencies"]
-license = {text = "MIT"}
+license = { text = "MIT" }
 dependencies = [
-    "pydantic",
-    "black",
-    "flake8",
-    "flake8-black",
-    "ruff",
-    "mypy",
-    "pydantic",
-    "pytest",
-    "pytest-mock",
-    "hypothesis",
-    "pytest-cov",
-    "pytest-xdist",
-    "pytest-md",
-    "pytest-emoji",
+  "pydantic",
+  "black",
+  "flake8",
+  "flake8-black",
+  "ruff",
+  "mypy",
+  "pydantic",
+  "pytest",
+  "pytest-mock",
+  "hypothesis",
+  "pytest-cov",
+  "pytest-xdist",
+  "pytest-md",
+  "pytest-emoji",
 ]
 dynamic = ["version", "readme"]
 
 [tool.setuptools]
 packages = ["devdeps"]
 
+[tool.setuptools.package-data]
+devdeps = ["py.typed"]
+
 [tool.setuptools.dynamic]
-readme = {file = ["README.md"], content-type = "text/markdown"}
+readme = { file = ["README.md"], content-type = "text/markdown" }
 
 [tool.setuptools_scm]
 write_to = "devdeps/_version.py"
@@ -47,9 +48,7 @@ extend-exclude = '''
 '''
 
 [tool.mypy]
-plugins = [
-  "pydantic.mypy"
-]
+plugins = ["pydantic.mypy"]
 
 follow_imports = "silent"
 warn_redundant_casts = true
@@ -64,14 +63,10 @@ disallow_untyped_defs = true
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "--verbose --doctest-modules --junitxml=junit/test-results.xml --cov=devdeps --cov=tests --cov-report html --cov-report term --cov-fail-under=100 --capture=no"
-testpaths = [
-    "tests"
-]
-pythonpath = [
-    "."
-]
+testpaths = ["tests"]
+pythonpath = ["."]
 
 
 [tool.coverage.run]
 branch = true
-omit = [ "devdeps/_version.py" ]
+omit = ["devdeps/_version.py"]
