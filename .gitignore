@@ -15,3 +15,5 @@ test-results.xml
 .pytest_cache
 report.md
 /.hypothesis
+/.ruff_cache
+/.mypy_cache
