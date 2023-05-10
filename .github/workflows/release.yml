@@ -28,6 +28,12 @@ jobs:
         with:
           cache: 'poetry'
 
+      # This is required by the poetry version command
+      - name: Setup Git
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@teamname.com"
+
       - name: bump up version
         run: |
           OLD_VERSION=`poetry version --short`
