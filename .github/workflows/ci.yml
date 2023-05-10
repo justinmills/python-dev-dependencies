@@ -8,24 +8,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+
+      - name: Install poetry
+        run: pipx install poetry==1.4.2
+
+      - name: Set up python
+        uses: actions/setup-python@v4
         with:
-          cache: pipenv
-      - name: Install pipenv
-        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
+          cache: 'poetry'
+
       - name: Install dependencies
-        run: pipenv install --dev
+        run: poetry install --only semver
 
       - name: Linting
-        run: pipenv run ruff check .
+        run: poetry run ruff check .
       - name: Formatting
-        run: pipenv run black --check .
+        run: poetry run black --check .
       - name: Type checking
-        run: pipenv run mypy devdeps tests
+        run: poetry run mypy dev_dependencies tests
 
       - name: Tests
         run: |
-          pipenv run pytest --verbose --emoji --md report.md
+          poetry run pytest --verbose --emoji --md report.md
           cat report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload test results
         uses: actions/upload-artifact@v3
@@ -38,4 +42,4 @@ jobs:
         if: ${{ always() }}
 
       - name: Build package
-        run: pipenv run python -m build
+        run: poetry build
