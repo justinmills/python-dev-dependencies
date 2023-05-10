@@ -18,7 +18,7 @@ jobs:
           cache: 'poetry'
 
       - name: Install dependencies
-        run: poetry install --only semver
+        run: poetry install
 
       - name: Linting
         run: poetry run ruff check .

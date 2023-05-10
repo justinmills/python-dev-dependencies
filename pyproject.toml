@@ -46,11 +46,18 @@ packages = [{ include = "dev_dependencies" }]
 [tool.poetry.dependencies]
 python = "^3.11"
 pydantic = "*"
-black = "*"
-flake8 = "*"
-flake8-black = "*"
+toml = "^0.10.2"
+
+[tool.poetry.group.lint.dependencies]
 ruff = "*"
+
+[tool.poetry.group.format.dependencies]
+black = "*"
+
+[tool.poetry.group.typechecking.dependencies]
 mypy = "*"
+
+[tool.poetry.group.test.dependencies]
 pytest = "*"
 pytest-mock = "*"
 hypothesis = "*"
@@ -58,4 +65,3 @@ pytest-cov = "*"
 pytest-xdist = "*"
 pytest-md = "*"
 pytest-emoji = "*"
-toml = "^0.10.2"
