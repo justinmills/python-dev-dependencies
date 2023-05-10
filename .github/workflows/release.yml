@@ -15,6 +15,10 @@ on:
 jobs:
   bump-version:
     runs-on: ubuntu-latest
+
+    # Only run this in the Release Environment (which will restrict it to the main branch)
+    environment: Release
+
     steps:
 
       - name: Checkout
@@ -43,6 +47,11 @@ jobs:
           git add pyproject.toml
           git commit -m "$MESSAGE"
           git tag -a "v${NEW_VERSION}" -m "$MESSAGE"
+          # No that we've tagged the release we want to cut, bump the version again to prep for the next version
+          poetry version prerelease
+          git add pyproject.toml
+          NEXT_VERSION=`poetry version --short`
+          git commit -m "Bumped version to next pre-release version: ${NEXT_VERSION}"
           git push --follow-tags
 
       # This was the old way to use some python code to get the current version
