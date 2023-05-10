@@ -46,7 +46,8 @@ packages = [{ include = "dev_dependencies" }]
 [tool.poetry.dependencies]
 python = "^3.11"
 pydantic = "*"
-toml = "^0.10.2"
+toml = "*"
+types-toml = "*"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "*"
