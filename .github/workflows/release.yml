@@ -1,15 +1,50 @@
-name: Create a new patch release
-on: workflow_dispatch
+name: Creates a new release
+# Run manually
+on:
+  workflow_dispatch:
+    inputs:
+      version:     
+        description: 'Semver type of new version (major / minor / patch)'
+        required: true
+        type: choice
+        options: 
+        - patch
+        - minor
+        - major
+
 jobs:
-  github:
+  bump-version:
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Create new patch release
-        run: .github/scripts/release.py
-        env:
-          # Do not use GITHUB_TOKEN here, which is available...reason being that
-          # any action taken using this token will never trigger another
-          # workflow, and that is exactly what we want!
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Install poetry
+        run: pipx install poetry==1.4.2
+
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          cache: 'poetry'
+
+      - name: bump up version
+        run: |
+          OLD_VERSION=`poetry version --short`
+          poetry version ${{ github.event.inputs.version }}
+          NEW_VERSION=`poetry version --short`
+          git add pyproject.toml
+          git commit -m "Bump up ${{ github.event.inputs.version }} version from ${OLD_VERSION} to ${NEW_VERSION}"
+          git tag "v${NEW_VERSION}"
+          git push
+              
+
+      # This was the old way to use some python code to get the current version
+      # and then bump it by one patch and git tag that one.
+      # - name: Create new patch release
+      #   run: .github/scripts/release.py
+      #   env:
+      #     # Do not use GITHUB_TOKEN here, which is available...reason being that
+      #     # any action taken using this token will never trigger another
+      #     # workflow, and that is exactly what we want!
+      #     GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
