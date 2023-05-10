@@ -39,11 +39,10 @@ jobs:
           OLD_VERSION=`poetry version --short`
           poetry version ${{ github.event.inputs.version }}
           NEW_VERSION=`poetry version --short`
+          MESSAGE="Bump up ${{ github.event.inputs.version }} version from ${OLD_VERSION} to ${NEW_VERSION}"
           git add pyproject.toml
-          git commit -m "Bump up ${{ github.event.inputs.version }} version from ${OLD_VERSION} to ${NEW_VERSION}"
-          git tag "v${NEW_VERSION}"
-          echo Listing tags
-          git tag
+          git commit -m "$MESSAGE"
+          git tag -a "v${NEW_VERSION}" -m "$MESSAGE"
           git push --follow-tags
 
       # This was the old way to use some python code to get the current version
