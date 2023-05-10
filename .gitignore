@@ -1,4 +1,5 @@
 __pycache__
+.venv
 
 # Build stuff
 *.egg-info/
@@ -7,11 +8,15 @@ build/
 
 .DS_Store
 
-# setuptools-scm's generated version file
-_version.py
 # pytest related cruft
 test-results.xml
 /.coverage
 .pytest_cache
 report.md
 /.hypothesis
+/htmlcov
+/junit
+
+.mypy_cache
+
+.ruff_cache
