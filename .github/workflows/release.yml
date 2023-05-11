@@ -37,13 +37,16 @@ jobs:
         with:
           cache: 'poetry'
 
+      - name: Install dependencies
+        run: poetry install
+
       # This is required by the poetry version command
       - name: Setup Git
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@teamname.com"
 
-      - name: bump up version
+      - name: Bump version to release
         run: |
           OLD_VERSION=`poetry version --short`
           poetry version ${{ github.event.inputs.version }}
@@ -52,12 +55,45 @@ jobs:
           git add pyproject.toml
           git commit -m "$MESSAGE"
           git tag -a "v${NEW_VERSION}" -m "$MESSAGE"
+
+          - name: Linting
+          run: poetry run ruff check .
+
+      - name: Formatting
+        run: poetry run black --check .
+      - name: Type checking
+        run: poetry run mypy dev_dependencies tests
+
+      - name: Tests
+        run: |
+          poetry run pytest --verbose --emoji --md report.md
+          cat report.md >> $GITHUB_STEP_SUMMARY
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results
+          path: |
+            junit/test-results.xml
+            htmlcov/*
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
+            
+      - name: Build package
+        run: poetry build
+
+      - name: Publish
+        run: poetry publish
+
+      - name: Bump version to next pre-release
+        run: |
           # Now that we've tagged the release we want to cut, bump the version again to prep for the next version
           poetry version prerelease
           git add pyproject.toml
           NEXT_VERSION=`poetry version --short`
           git commit -m "Bumped version to next pre-release version: ${NEXT_VERSION}"
-          git push --follow-tags
+
+      - name: Push local changes to origin
+        run: git push --follow-tags
 
       # This was the old way to use some python code to get the current version
       # and then bump it by one patch and git tag that one.
