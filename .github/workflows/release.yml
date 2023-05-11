@@ -52,7 +52,7 @@ jobs:
           git add pyproject.toml
           git commit -m "$MESSAGE"
           git tag -a "v${NEW_VERSION}" -m "$MESSAGE"
-          # No that we've tagged the release we want to cut, bump the version again to prep for the next version
+          # Now that we've tagged the release we want to cut, bump the version again to prep for the next version
           poetry version prerelease
           git add pyproject.toml
           NEXT_VERSION=`poetry version --short`
