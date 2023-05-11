@@ -14,6 +14,11 @@ on:
 
 jobs:
   bump-version:
+
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      contents: read
+
     runs-on: ubuntu-latest
 
     # Only run this in the Release Environment (which will restrict it to the main branch)
