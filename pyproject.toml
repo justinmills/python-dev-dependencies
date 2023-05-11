@@ -27,7 +27,6 @@ disallow_untyped_defs = true
 minversion = "6.0"
 addopts = "--verbose --doctest-modules --junitxml=junit/test-results.xml --cov=dev_dependencies --cov=tests --cov-report html --cov-report term --cov-fail-under=100 --capture=no"
 testpaths = ["tests"]
-pythonpath = ["."]
 
 
 [tool.coverage.run]
@@ -45,20 +44,18 @@ packages = [{ include = "dev_dependencies" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+# Types
 pydantic = "*"
+# Backup version parsing
 toml = "*"
 types-toml = "*"
-
-[tool.poetry.group.lint.dependencies]
+# Linting
 ruff = "*"
-
-[tool.poetry.group.format.dependencies]
+# Formatting
 black = "*"
-
-[tool.poetry.group.typechecking.dependencies]
+# Typechecking
 mypy = "*"
-
-[tool.poetry.group.test.dependencies]
+# Testing
 pytest = "*"
 pytest-mock = "*"
 hypothesis = "*"
