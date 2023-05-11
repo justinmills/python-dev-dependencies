@@ -23,6 +23,11 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          # Check out using the secret PAT an admin set up so we can bypass
+          # branch protection rules. NOTE also that we're running in the Release
+          # environment which on the repo is restricted to only the main branch.
+          token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
       - name: Install poetry
         run: pipx install poetry==1.4.2
