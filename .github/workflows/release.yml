@@ -56,8 +56,8 @@ jobs:
           git commit -m "$MESSAGE"
           git tag -a "v${NEW_VERSION}" -m "$MESSAGE"
 
-          - name: Linting
-          run: poetry run ruff check .
+      - name: Linting
+        run: poetry run ruff check .
 
       - name: Formatting
         run: poetry run black --check .
