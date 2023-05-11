@@ -36,7 +36,7 @@ omit = ["dev_dependencies/_version.py"]
 
 [tool.poetry]
 name = "dev-dependencies"
-version = "0.0.2a0"
+version = "0.0.2"
 description = "An opinionated library of dev-time dependencies"
 authors = ["Justin Mills <vortexjj@gmail.com>"]
 license = "MIT"
