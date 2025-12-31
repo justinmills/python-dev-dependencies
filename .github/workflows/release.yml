@@ -3,20 +3,19 @@ name: Creates a new release
 on:
   workflow_dispatch:
     inputs:
-      version:     
-        description: 'Semver type of new version (major / minor / patch)'
+      version:
+        description: "Semver type of new version (major / minor / patch)"
         required: true
         type: choice
-        options: 
-        - patch
-        - minor
-        - major
+        options:
+          - patch
+          - minor
+          - major
 
 jobs:
   bump-version:
-
     permissions:
-      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
       contents: read
 
     runs-on: ubuntu-latest
@@ -25,9 +24,8 @@ jobs:
     environment: Release
 
     steps:
-
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           # Check out using the secret PAT an admin set up so we can bypass
           # branch protection rules. NOTE also that we're running in the Release
@@ -35,12 +33,12 @@ jobs:
           token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
       - name: Install poetry
-        run: pipx install poetry==1.4.2
+        run: pipx install poetry==2.2.1
 
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          cache: 'poetry'
+          cache: "poetry"
 
       - name: Install dependencies
         run: poetry install
@@ -74,7 +72,7 @@ jobs:
           poetry run pytest --verbose --emoji --md report.md
           cat report.md >> $GITHUB_STEP_SUMMARY
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: pytest-results
           path: |
@@ -82,7 +80,7 @@ jobs:
             htmlcov/*
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
-            
+
       - name: Build package
         run: poetry build
 
