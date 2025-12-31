@@ -63,3 +63,12 @@ pytest-cov = "*"
 pytest-xdist = "*"
 pytest-md = "*"
 pytest-emoji = "*"
+# Fixing up imports
+importmagic = "*"
+isort = "*"
+autoflake = "*"
+# Better interactive python
+ipython = "*"
+
+[tool.poetry.scripts]
+justin-test = "dev_dependencies.main:run"
